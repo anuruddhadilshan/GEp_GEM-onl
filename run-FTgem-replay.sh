@@ -22,17 +22,17 @@ cp $SBS/run_replay_here/.rootrc .
 
 analyzer -b -q 'replay_gep_FTGEM.C+('$runnum', '$maxevents', '$firstevent', '\"$prefix\"', '$firstsegment', '$maxsegments', '$pedestalmode')'
 
-if [[ $pedestalmode == 1 ]]; then
-    db_cmfile='db_cmr_sbs_gemFT_run'$runnum'.dat'
-    daq_pedfile='daq_ped_sbs_gemFT_run'$runnum'.dat'
-    daq_cmfile='daq_cmr_sbs_gemFT_run'$runnum'.dat'
-    gem_aligninfofile='GEM_alignment_info_sbs_gemFT_run'$runnum'.txt'
-    # move output files
-    mv $db_cmfile $DB_DIR/gemped
-    mv $daq_pedfile $DB_DIR/gemped
-    mv $daq_cmfile $DB_DIR/gemped
-    mv $gem_aligninfofile $DB_DIR/gemped
-fi
+# if [[ $pedestalmode == 1 ]]; then
+#     db_cmfile='db_cmr_sbs_gemFT_run'$runnum'.dat'
+#     daq_pedfile='daq_ped_sbs_gemFT_run'$runnum'.dat'
+#     daq_cmfile='daq_cmr_sbs_gemFT_run'$runnum'.dat'
+#     gem_aligninfofile='GEM_alignment_info_sbs_gemFT_run'$runnum'.txt'
+#     # move output files
+#     mv $db_cmfile $DB_DIR/gemped
+#     mv $daq_pedfile $DB_DIR/gemped
+#     mv $daq_cmfile $DB_DIR/gemped
+#     mv $gem_aligninfofile $DB_DIR/gemped
+# fi
 
 # clean up the directory
 rm .rootrc

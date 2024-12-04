@@ -6,10 +6,10 @@ echo -e "\n"
 echo "You are at: $(pwd)"
 echo "Setting path variables for local scripts..."
 
-module purge
-module use /group/halla/modulefiles
+#module purge
+module use /adaqfs/apps/modulefiles
 module load analyzer
-#module load panguin
+module load panguin
 module list
 
 # Set what SBS-offline installation to use in here.
