@@ -2,9 +2,11 @@
 
 # Script to run pedestal analysis for FTgems and display, print, and log the results.
 
+# Usage: $ analyze-FTgem-pedestal <runnunm>
+
 # List of arguments
 runnum=$1           # run number
-nevents=100        # total no. of events to replay. We typically replay 5K events for pedestals.
+nevents=1000        # total no. of events to replay. We typically replay 5K events for pedestals.
 firstevent=0        # the first event to analyze
 fname_prefix='e1217004'     # set according to the CODA file name prefix
 firstsegment=0      # first evio file segment to analyze
@@ -15,7 +17,7 @@ script='run-FTgem-replay.sh'
 
 $script $runnum $nevents $firstevent $fname_prefix $firstsegment $maxsegments $pedestalmode
 
-                     ## Making Panguin plots ##
+                    ## Making Panguin plots ##
 
 export PANGUIN_CONFIG_PATH=$SBS_REPLAY/onlineGUIconfig:$SBS_REPLAY/onlineGUIconfig/scripts
 
