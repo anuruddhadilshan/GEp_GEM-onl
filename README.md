@@ -18,7 +18,7 @@ Follow the following steps to analyze 5K events of pedestal data, generate the p
 3. User is prompted to decide whether or not to move the pedestal and CM files to the `$SBS_OFFLINE/DB/gemped` and the VTP config files.
 
 ## 3. Analysing a cosmic run
-1. Run `$ analyze-FTgem-pedestal.sh <CODA runnum>`. 
+1. Run `$ analyze-FTgem-cosmics.sh <CODA runnum>`. 
 2. First it will check whether the CODA run exists within the specified data directories (`$OUT_DIR`) in the `setenv.sh` script. 
 3. If yes, it will ask how many parallel jobs you would like to run. More parallel jobs you run, the faster your analysis will be. 
 4. Once the analysis is complete, the replayed ROOT files from the individual jobs will be added together to make a single ROOT file to make the plots.
