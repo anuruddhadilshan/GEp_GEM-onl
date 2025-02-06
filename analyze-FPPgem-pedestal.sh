@@ -1,10 +1,12 @@
 #!/bin/bash
 
+set -u
+
 # Script to run pedestal analysis for FTgems and display, print, and log the results.
 
-# Usage: $ analyze-FTgem-pedestal <runnunm> <daqtype>
+# Usage: $ analyze-FPPgem-pedestal <runnunm> <daqtype>
 
-# List of input arguments
+# List of arguments
 runnum=$1           # run number
 daqtype=$2          # DAQ type. Input '1' for main DAQ and '2' for stand-alone GEM DAQ.
 
@@ -22,7 +24,6 @@ else
 
 fi
 
-
 nevents=5000        # total no. of events to replay. We typically replay 5K events for pedestals.
 firstevent=0        # the first event to analyze
 firstsegment=0      # first evio file segment to analyze
@@ -31,7 +32,7 @@ pedestalmode=1      # set to 1 for pedestal analysis
 
 source setenv.sh
 
-script='run-FTgem-replay.sh'
+script='run-FPPgem-replay.sh'
 
 $script $runnum $nevents $firstevent $fname_prefix $firstsegment $maxsegments $pedestalmode
 
@@ -40,19 +41,19 @@ module purge
 module load panguin
 export PANGUIN_CONFIG_PATH=$SBS_REPLAY/onlineGUIconfig:$SBS_REPLAY/onlineGUIconfig/scripts
 
-# Where are the replayed ROOT files located?
+# # Where are the replayed ROOT files located?
 ROOT_DIR=/chafs2/work1/sbs/Rootfiles
 
-# What is the ROOT file to make plots from?
-ROOTFILE=$ROOT_DIR/${fname_prefix}_replayed_gepFTGEMs_${runnum}_seg0_${firstsegment}_firstevent${firstevent}_nevent${nevents}.root
+# # What is the ROOT file to make plots from?
+ROOTFILE=$ROOT_DIR/${fname_prefix}_replayed_gepFPPGEMs_${runnum}_seg0_${firstsegment}_firstevent${firstevent}_nevent${nevents}.root
 
-panguin -f sbs_gem_ped_and_commonmode_gepFT.cfg -r $runnum -R $ROOTFILE 
+panguin -f sbs_gem_ped_and_commonmode_gepFPP.cfg -r $runnum -R $ROOTFILE 
 
-panguin -f sbs_gem_ped_and_commonmode_gepFT.cfg -r $runnum -R $ROOTFILE -P
+panguin -f sbs_gem_ped_and_commonmode_gepFPP.cfg -r $runnum -R $ROOTFILE -P
 
 PLOTS_DIR=/chafs2/work1/sbs/plots/
 
-mv summaryPlots_${runnum}_sbs_gem_ped_and_commonmode_gepFT.pdf $PLOTS_DIR
+mv summaryPlots_${runnum}_sbs_gem_ped_and_commonmode_gepFPP.pdf $PLOTS_DIR
 
 function yes_or_no(){
   while true; do
@@ -90,14 +91,14 @@ if yes_or_no "Copy ped and CM files to vtp directories and SBS-replay/DB/gemped?
 
     # done
 
-    mv db_cmr_sbs_gemFT_run${runnum}.dat $SBS_REPLAY/DB/gemped
-    mv daq_cmr_sbs_gemFT_run${runnum}.dat $SBS_REPLAY/DB/gemped
-    mv daq_ped_sbs_gemFT_run${runnum}.dat $SBS_REPLAY/DB/gemped
-    mv GEM_alignment_info_sbs_gemFT_run${runnum}.txt $SBS_REPLAY/DB/gemped
+    mv db_cmr_sbs_gemFPP_run${runnum}.dat $SBS_REPLAY/DB/gemped
+    mv daq_cmr_sbs_gemFPP_run${runnum}.dat $SBS_REPLAY/DB/gemped
+    mv daq_ped_sbs_gemFPP_run${runnum}.dat $SBS_REPLAY/DB/gemped
+    mv GEM_alignment_info_sbs_gemFPP_run${runnum}.txt $SBS_REPLAY/DB/gemped
 
     echo ""
     echo "Now you must log into sbsvtp# and change vtp/cfg/sbsvtp#.config to match the pedestal run number"
-    echo "Then change db_sbs.gemFT.dat to also match the pedestal run number"
+    echo "Then change db_sbs.gemFPP.dat to also match the pedestal run number"
 else
     # Create the output directory for GEM ped files if necessary.
     gemped_localoutdir=gemped
@@ -111,10 +112,10 @@ else
         }
     fi
     
-    mv db_cmr_sbs_gemFT_run${runnum}.dat $gemped_localoutdir
-    mv daq_cmr_sbs_gemFT_run${runnum}.dat $gemped_localoutdir
-    mv daq_ped_sbs_gemFT_run${runnum}.dat $gemped_localoutdir
-    mv GEM_alignment_info_sbs_gemFT_run${runnum}.txt $gemped_localoutdir
+    mv db_cmr_sbs_gemFPP_run${runnum}.dat $gemped_localoutdir
+    mv daq_cmr_sbs_gemFPP_run${runnum}.dat $gemped_localoutdir
+    mv daq_ped_sbs_gemFPP_run${runnum}.dat $gemped_localoutdir
+    mv GEM_alignment_info_sbs_gemFPP_run${runnum}.txt $gemped_localoutdir
 
     echo "Pedestal and CM files were moved to the folder: ${gemped_localoutdir}"
 fi

@@ -30,7 +30,7 @@ firstsegment=0      # first evio file segment to analyze
 maxsegments=1       # maximum no. of segments (or jobs) to analyze
 pedestalmode=0      # set to 1 for pedestal analysis
 
-script='run-FTgem-replay.sh'
+script='run-FPPgem-replay.sh'
 
 # Check if $DATA_DIR is set properly.
 if [ -z "$DATA_DIR" ]; then
@@ -110,7 +110,6 @@ case $daqtype in
 
 esac
 
-
 echo "No of file segments for run $runnum: $seg"
 
 # How many jobs to run? That will decide number of segments per job.
@@ -120,6 +119,7 @@ seg_per_job=$((seg/njobs))
 
 echo "Segments per job: $seg_per_job"
 echo "Job remainder: $((seg % njobs))"
+
 
 for ((ijob=0; ijob<njobs; ijob++))
 do
@@ -132,16 +132,16 @@ if ((seg % njobs != 0)); then # Run one additional job to replay the remainder o
   xterm -e "ssh a-onl@aonl1 'bash -i -c \"gogem && source setenv.sh && $script $runnum $nevents $firstevent $fname_prefix $first_seg $((seg % njobs)) $pedestalmode\"'" &
 fi
 
-# # Wait for all the background processes to finish
+# Wait for all the background processes to finish
 wait
 
 ## Put the replayed ROOT files together ##
-concat_rootfilename="${fname_prefix}_fullreplay_gepFTGEMs_${runnum}_all.root"
+concat_rootfilename="${fname_prefix}_fullreplay_gepFPPGEMs_${runnum}_all.root"
 
 echo ""
 echo "Putting all the replayed ROOT files together to make plots. This may take a few minuites..."
 echo ""
-hadd -k -f -j 16 $OUT_DIR/${concat_rootfilename} $OUT_DIR/${fname_prefix}_fullreplay_gepFTGEMs_${runnum}_seg*.root
+hadd -k -f -j 16 $OUT_DIR/${concat_rootfilename} $OUT_DIR/${fname_prefix}_fullreplay_gepFPPGEMs_${runnum}_seg*.root
 
 
 ## Making Panguin plots ##
@@ -155,16 +155,16 @@ ROOT_DIR=$OUT_DIR
 # What is the ROOT file to make plots from?
 ROOTFILE=$ROOT_DIR/${concat_rootfilename}
 
-panguin -f sbs_gem_gepFT.cfg -r $runnum -R $ROOTFILE
-panguin -f sbs_gem_gepFT.cfg -r $runnum -R $ROOTFILE -P 
+panguin -f sbs_gem_gepFPP.cfg -r $runnum -R $ROOTFILE
+panguin -f sbs_gem_gepFPP.cfg -r $runnum -R $ROOTFILE -P 
 
-panguin -f sbs_gem_basic_gepFT.cfg -r $runnum -R $ROOTFILE
-panguin -f sbs_gem_basic_gepFT.cfg -r $runnum -R $ROOTFILE -P
+panguin -f sbs_gem_basic_gepFPP.cfg -r $runnum -R $ROOTFILE
+panguin -f sbs_gem_basic_gepFPP.cfg -r $runnum -R $ROOTFILE -P
 
 PLOTS_DIR=/chafs2/work1/sbs/plots/
 
-mv summaryPlots_${runnum}_sbs_gem_gepFT.pdf $PLOTS_DIR
-mv summaryPlots_${runnum}_sbs_gem_basic_gepFT.pdf $PLOTS_DIR
+mv summaryPlots_${runnum}_sbs_gem_gepFPP.pdf $PLOTS_DIR
+mv summaryPlots_${runnum}_sbs_gem_basic_gepFPP.pdf $PLOTS_DIR
 
 echo ""
 echo "You can find the PDFs at: ${PLOTS_DIR}"
@@ -188,3 +188,4 @@ echo ""
 #     --tag Autolog \
 #     --title "FTGEM pedestal plots for run ${runnum}" \
 #     --attach ${PLOTS_DIR}/summaryPlots_${runnum}_sbs_gem_ped_and_commonmode_gepFT.pdf
+
