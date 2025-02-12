@@ -21,7 +21,7 @@ source $SBS/bin/sbsenv.sh
 # Set what SBS-replay to use in here.
 export SBS_REPLAY=$HOME/sbs/GEM_replay/GEpGEM-onl/SBS-replay
 
-export DATA_DIR=/adaqeb1/data1:/cache/halla/sbs/GEp/raw:/cache/halla/sbs/GEnRP/raw
+export DATA_DIR=/adaqeb1/data1:/cache/halla/sbs/GEp/raw:/cache/halla/sbs/GEnRP/raw:/adaqeb2/data1
 export DB_DIR=$SBS_REPLAY/DB
 export OUT_DIR=$HOME/sbs/Rootfiles
 export LOG_DIR=/aonl1/work1/logs

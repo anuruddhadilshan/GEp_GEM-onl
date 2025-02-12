@@ -189,3 +189,11 @@ echo ""
 #     --title "FTGEM pedestal plots for run ${runnum}" \
 #     --attach ${PLOTS_DIR}/summaryPlots_${runnum}_sbs_gem_ped_and_commonmode_gepFT.pdf
 
+# Let's move the GEM align info files to a separate directory remove the clutter in the top level directory.
+gemalign_localdir=gemalign
+
+if [ -f GEM_alignment_info_sbs_gemFPP_run${runnum}.txt ]; then
+  mv GEM_alignment_info_sbs_gemFPP_run${runnum}.txt $gemalign_localdir
+  echo "GEM alignment info file can be found at the folder: "${gemalign_localdir}
+  echo ""
+fi

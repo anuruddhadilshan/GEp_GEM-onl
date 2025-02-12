@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -u
+
 # Script to run pedestal analysis for FTgems and display, print, and log the results.
 
 # Usage: $ analyze-FTgem-pedestal <runnunm> <daqtype>
@@ -93,8 +95,7 @@ if yes_or_no "Copy ped and CM files to vtp directories and SBS-replay/DB/gemped?
     mv db_cmr_sbs_gemFT_run${runnum}.dat $SBS_REPLAY/DB/gemped
     mv daq_cmr_sbs_gemFT_run${runnum}.dat $SBS_REPLAY/DB/gemped
     mv daq_ped_sbs_gemFT_run${runnum}.dat $SBS_REPLAY/DB/gemped
-    mv GEM_alignment_info_sbs_gemFT_run${runnum}.txt $SBS_REPLAY/DB/gemped
-
+    
     echo ""
     echo "Now you must log into sbsvtp# and change vtp/cfg/sbsvtp#.config to match the pedestal run number"
     echo "Then change db_sbs.gemFT.dat to also match the pedestal run number"
@@ -114,7 +115,15 @@ else
     mv db_cmr_sbs_gemFT_run${runnum}.dat $gemped_localoutdir
     mv daq_cmr_sbs_gemFT_run${runnum}.dat $gemped_localoutdir
     mv daq_ped_sbs_gemFT_run${runnum}.dat $gemped_localoutdir
-    mv GEM_alignment_info_sbs_gemFT_run${runnum}.txt $gemped_localoutdir
-
+    
     echo "Pedestal and CM files were moved to the folder: ${gemped_localoutdir}"
+fi
+
+# Let's move the GEM align info files to a separate directory remove the clutter in the top level directory.
+gemalign_localdir=gemalign
+
+if [ -f GEM_alignment_info_sbs_gemFT_run${runnum}.txt ]; then
+  mv GEM_alignment_info_sbs_gemFT_run${runnum}.txt $gemalign_localdir
+  echo "GEM alignment info file can be found at the folder: "${gemalign_localdir}
+  echo ""
 fi
