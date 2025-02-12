@@ -32,9 +32,9 @@ pedestalmode=1      # set to 1 for pedestal analysis
 
 source setenv.sh
 
-# script='run-allgem-replay.sh'
+script='run-allgem-replay.sh'
 
-# $script $runnum $nevents $firstevent $fname_prefix $firstsegment $maxsegments $pedestalmode
+$script $runnum $nevents $firstevent $fname_prefix $firstsegment $maxsegments $pedestalmode
 
                     ## Making Panguin plots ##
 module purge

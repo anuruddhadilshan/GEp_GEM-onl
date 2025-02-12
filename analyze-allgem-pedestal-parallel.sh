@@ -36,9 +36,6 @@ source setenv.sh
 scriptFT='run-FTgem-replay.sh'
 scriptFPP='run-FPPgem-replay.sh'
 
-#$scriptFT $runnum $nevents $firstevent $fname_prefix $firstsegment $maxsegments $pedestalmode
-
-
 xterm -e "ssh a-onl@aonl1 'bash -i -c \"gogem && source setenv.sh && $scriptFT $runnum $nevents $firstevent $fname_prefix $firstsegment $maxsegments $pedestalmode\"'" &
 xterm -e "ssh a-onl@aonl1 'bash -i -c \"gogem && source setenv.sh && $scriptFPP $runnum $nevents $firstevent $fname_prefix $firstsegment $maxsegments $pedestalmode\"'" &
 
